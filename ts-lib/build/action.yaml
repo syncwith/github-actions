@@ -15,10 +15,13 @@ runs:
         node-version: ${{ inputs.node-version }}
 
     - name: Install
+      shell: bash
       run: yarn
 
     - name: TSC Check
+      shell: bash
       run: yarn tsc:check
 
     - name: Test
+      shell: bash
       run: yarn test
