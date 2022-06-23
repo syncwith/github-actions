@@ -1,0 +1,34 @@
+name: 'TS Library Workflow'
+description: "Build and publish a typescript library"
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: false
+        type: string
+        default: '16'
+      publish-branch:
+        required: true
+        type: string
+
+jobs:
+  test:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: ./build
+          with: 
+            node-version: ${{ inputs.node-version }}
+
+  publish:
+    needs: test
+    if: github.ref_name == ${{ inputs.publish-branch }}
+    runs-on: ubuntu-latest
+    permissions: 
+      contents: write
+      packages: write
+    steps:
+      - uses: ./publish
+        with:
+          publish-token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: ${{ inputs.node-version }}
