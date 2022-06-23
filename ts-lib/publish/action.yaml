@@ -6,10 +6,9 @@ inputs:
     required: false
     type: string
     default: '16'
-  publish-branch:
-    required: false
+  publish-token:
+    required: true
     type: string
-    default: 'master'
 runs:
   using: "composite"
   steps:
@@ -31,7 +30,7 @@ runs:
     - run: yarn publish --patch --verbose
       shell: bash
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ inputs.publish-token }}
     - name: Push tag
       shell: bash
       run: |
