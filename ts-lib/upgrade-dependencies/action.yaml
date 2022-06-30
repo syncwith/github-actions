@@ -1,0 +1,33 @@
+name: 'Upgrade Dependencies'
+description: "Update the package.json to have the latest dependencies"
+
+inputs:
+  node-version:
+    required: false
+    type: string
+    default: '16'
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v2
+    - name: Setup git
+      shell: bash
+      run: |
+        git config user.name "${GITHUB_ACTOR}"
+        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+    - uses: actions/setup-node@v2
+      with:
+        node-version: ${{ inputs.node-version }}
+        registry-url: https://npm.pkg.github.com/
+        scope: '@getmicro'
+    - run: yarn
+      shell: bash
+    - run: yarn build
+      shell: bash
+    - run: yarn upgrade -S '@getmicro' -L -T
+      shell: bash
+    - run: git checkin -am "upgrade @getmicro dependencies"
+      shell: bash
+    - run: git push origin
+      shell: bash
+      
