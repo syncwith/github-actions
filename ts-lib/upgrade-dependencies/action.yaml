@@ -22,7 +22,7 @@ runs:
         scope: '@getmicro'
     - run: yarn upgrade -S '@getmicro' -L -T
       shell: bash
-    - run: git checkin -am "upgrade @getmicro dependencies"
+    - run: git commit -am "upgrade @getmicro dependencies"
       shell: bash
     - run: git push origin
       shell: bash
