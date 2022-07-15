@@ -20,10 +20,6 @@ runs:
         node-version: ${{ inputs.node-version }}
         registry-url: https://npm.pkg.github.com/
         scope: '@getmicro'
-    - run: yarn
-      shell: bash
-    - run: yarn build
-      shell: bash
     - run: yarn upgrade -S '@getmicro' -L -T
       shell: bash
     - run: git checkin -am "upgrade @getmicro dependencies"
