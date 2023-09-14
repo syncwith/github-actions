@@ -7,10 +7,6 @@ inputs:
     type: string
     default: '16'
 
-  package-token:
-    required: false
-    type: string
-
 runs:
   using: "composite"
   steps:
@@ -19,11 +15,8 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
 
-    - run: echo "//npm.pkg.github.com/:_authToken=$NODE_AUTH_TOKEN" >> .npmrc
+    - run: echo "//npm.pkg.github.com/:_authToken=${{ github.token }}" >> .npmrc
       shell: bash
-      env:
-        NODE_AUTH_TOKEN: ${{ inputs.package-token }}
-      if: ${{ inputs.package-token != '' }}
 
     - name: Install
       shell: bash
