@@ -14,9 +14,14 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
 
+    - run: echo "//npm.pkg.github.com/:_authToken=$NODE_AUTH_TOKEN" >> .npmrc
+      shell: bash
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Install
       shell: bash
-      run: yarn
+      run: yarn install --frozen-lockfile
 
     - name: TSC Check
       shell: bash
