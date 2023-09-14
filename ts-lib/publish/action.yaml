@@ -26,7 +26,7 @@ runs:
     - run: echo "//npm.pkg.github.com/:_authToken=$NODE_AUTH_TOKEN" >> .npmrc
       shell: bash
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ inputs.publish-token }}
     - run: yarn install --frozen-lockfile
       shell: bash
     - run: yarn build
